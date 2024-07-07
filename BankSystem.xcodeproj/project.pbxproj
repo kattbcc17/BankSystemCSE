@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		038637042C39E92600F316E5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 038637032C39E92600F316E5 /* main.cpp */; };
+		038637222C39FE4600F316E5 /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 038637202C39FE4600F316E5 /* program.cpp */; };
+		038637272C39FE9C00F316E5 /* account.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 038637252C39FE9C00F316E5 /* account.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +25,12 @@
 
 /* Begin PBXFileReference section */
 		038637002C39E92600F316E5 /* BankSystem */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BankSystem; sourceTree = BUILT_PRODUCTS_DIR; };
-		038637032C39E92600F316E5 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		038637202C39FE4600F316E5 /* program.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = program.cpp; sourceTree = "<group>"; };
+		038637212C39FE4600F316E5 /* program.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = program.hpp; sourceTree = "<group>"; };
+		038637242C39FE8300F316E5 /* account.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = account.h; sourceTree = "<group>"; };
+		038637252C39FE9C00F316E5 /* account.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = account.cpp; sourceTree = "<group>"; };
+		038637262C39FE9C00F316E5 /* account.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = account.hpp; sourceTree = "<group>"; };
+		038637282C3A124500F316E5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +47,10 @@
 		038636F72C39E92600F316E5 = {
 			isa = PBXGroup;
 			children = (
+				038637282C3A124500F316E5 /* README.md */,
+				038637252C39FE9C00F316E5 /* account.cpp */,
+				038637262C39FE9C00F316E5 /* account.hpp */,
+				038637242C39FE8300F316E5 /* account.h */,
 				038637022C39E92600F316E5 /* BankSystem */,
 				038637012C39E92600F316E5 /* Products */,
 			);
@@ -57,7 +67,8 @@
 		038637022C39E92600F316E5 /* BankSystem */ = {
 			isa = PBXGroup;
 			children = (
-				038637032C39E92600F316E5 /* main.cpp */,
+				038637202C39FE4600F316E5 /* program.cpp */,
+				038637212C39FE4600F316E5 /* program.hpp */,
 			);
 			path = BankSystem;
 			sourceTree = "<group>";
@@ -119,7 +130,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				038637042C39E92600F316E5 /* main.cpp in Sources */,
+				038637222C39FE4600F316E5 /* program.cpp in Sources */,
+				038637272C39FE9C00F316E5 /* account.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
