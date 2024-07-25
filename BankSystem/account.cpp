@@ -1,44 +1,34 @@
-//
-//  account.cpp
-//  BankSystem
-//
-//  Created by kattia contreras on 7/6/24.
-//
-
 #include "account.hpp"
-#include "account.h"
+#include "contact.hpp"
 #include <iostream>
 #include <limits>
 
-// Initialize the static member variable
 int Account::nextID = 0;
 
-// Constructor
-Account::Account() : accountID(nextID++), accountName(""), accountBalance(0.0f) {}
+Account::Account() : accountID(nextID++), accountName(""), accountBalance(0.0f), contactInfo(nullptr) {}
 
-// Method to prompt user for account details
 void Account::initialize() {
     std::cout << "Enter the name: ";
     std::getline(std::cin, accountName);
     std::cout << "Enter the balance: ";
     std::cin >> accountBalance;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-// Method to display account information
 void Account::display() const {
     std::cout << "Account ID: " << accountID
               << "  Name: " << accountName
               << "  Balance: $" << accountBalance << std::endl;
+    if (contactInfo) {
+        std::cout << "+ Contact Information: " << *contactInfo << std::endl;
+    }
 }
 
-// Overloaded operator+= to add deposit
 Account& Account::operator+=(float deposit) {
     this->accountBalance += deposit;
     return *this;
 }
 
-// Overloaded operator-= to subtract withdrawal
 Account& Account::operator-=(float withdrawal) {
     if (withdrawal <= this->accountBalance) {
         this->accountBalance -= withdrawal;
@@ -48,20 +38,20 @@ Account& Account::operator-=(float withdrawal) {
     return *this;
 }
 
-// Method to display account info via output stream
 std::ostream& Account::display(std::ostream& out) const {
     out << "Account ID: " << this->accountID
         << " Name: " << this->accountName
         << " Balance: $" << this->accountBalance;
+    if (contactInfo) {
+        out << "\n+ Contact Information: " << *contactInfo;
+    }
     return out;
 }
 
-// Overloaded operator<< to use display method
 std::ostream& operator<<(std::ostream& out, const Account& account) {
     return account.display(out);
 }
 
-// Method to withdraw from account
 void Account::withdraw(float amount) {
     if (amount <= accountBalance) {
         accountBalance -= amount;
@@ -70,7 +60,6 @@ void Account::withdraw(float amount) {
     }
 }
 
-// Getters
 int Account::getID() const {
     return accountID;
 }
@@ -83,7 +72,11 @@ float Account::getBalance() const {
     return accountBalance;
 }
 
-// Added for Part 4: Apply dividend to account
 void Account::applyDividend(float factor) {
     accountBalance *= factor;
+}
+
+void Account::addContactInfo() {
+    contactInfo = std::make_shared<Contact>();
+    contactInfo->initialize();
 }

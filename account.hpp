@@ -1,14 +1,10 @@
-//
-//  account.hpp
-//  BankSystem
-//
-//
-
 #ifndef account_hpp
 #define account_hpp
 
 #include <iostream>
+#include <memory>
 #include <string>
+#include "contact.hpp"
 
 class Account {
    private:
@@ -16,6 +12,7 @@ class Account {
     int accountID;
     std::string accountName;
     float accountBalance;
+    std::shared_ptr<Contact> contactInfo;
 
    public:
     Account();
@@ -23,20 +20,19 @@ class Account {
     void display() const;
     void deposit(float amount);
     void withdraw(float amount);
-    void applyDividend(float factor);  // Added for Part 4
+    void applyDividend(float factor);
+    void addContactInfo();
 
-    // Overloaded operators
     Account& operator+=(float deposit);
     Account& operator-=(float withdrawal);
     std::ostream& display(std::ostream& out) const;
 
-    // Getters
     int getID() const;
     std::string getName() const;
     float getBalance() const;
+    std::shared_ptr<Contact> getContactInfo() const;
 };
 
-// Declaration of the operator<< overload
 std::ostream& operator<<(std::ostream& out, const Account& account);
 
 #endif  // account_hpp

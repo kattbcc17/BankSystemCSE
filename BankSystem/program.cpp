@@ -1,18 +1,9 @@
-//
-//  program.cpp
-//  BankSystem
-//
-//
-
 #include "program.hpp"
-
 #include <algorithm>
 #include <iostream>
 #include <limits>
 #include <list>  // For std::list
 #include <numeric>
-
-#include "account.h"
 #include "account.hpp"
 
 std::list<Account> accounts;  // List to store accounts
@@ -25,9 +16,12 @@ void displayMenu() {
     std::cout << "3. Withdraw from an account\n";
     std::cout << "4. Add new account\n";
     std::cout << "5. Find account by ID\n";
-    std::cout << "6. Remove account\n";                       // New option
-    std::cout << "7. Show total balance for all accounts\n";  // New option
-    std::cout << "8. Add a dividend to all accounts\n";       // New option
+    std::cout << "6. Remove account\n";                       
+    std::cout << "7. Show total balance for all accounts\n";
+    std::cout << "8. Add a dividend to all accounts\n";
+    std::cout << "9. Add contact information to an account\n";
+    std::cout << "10. Search for accounts by balance range\n";  // New option
+    std::cout << "11. Transfer funds between accounts\n";       // New option
     std::cout << "Your choice: ";
 }
 
@@ -39,6 +33,40 @@ std::list<Account>::iterator findAccountByID(int id) {
         }
     }
     return accounts.end();  // Return end iterator if account not found
+}
+
+// Function to search accounts by balance range
+void searchAccountsByBalanceRange(float minBalance, float maxBalance) {
+    std::cout << "Accounts within balance range $" << minBalance << " - $" << maxBalance << ":\n";
+    bool found = false;
+    for (const auto& acc : accounts) {
+        float balance = acc.getBalance();
+        if (balance >= minBalance && balance <= maxBalance) {
+            std::cout << acc << std::endl;  // Uses overloaded operator<<
+            found = true;
+        }
+    }
+    if (!found) {
+        std::cout << "No accounts found within this balance range.\n";
+    }
+}
+
+// Function to transfer funds between accounts
+void transferFunds(int fromID, int toID, float amount) {
+    auto fromIt = findAccountByID(fromID);
+    auto toIt = findAccountByID(toID);
+
+    if (fromIt != accounts.end() && toIt != accounts.end()) {
+        if (fromIt->getBalance() >= amount) {
+            *fromIt -= amount;  // Withdraw from the source account
+            *toIt += amount;    // Deposit into the destination account
+            std::cout << "Transfer successful.\n";
+        } else {
+            std::cout << "Insufficient funds in the source account.\n";
+        }
+    } else {
+        std::cout << "One or both accounts not found.\n";
+    }
 }
 
 int main() {
@@ -125,7 +153,6 @@ int main() {
                     std::cout << "Account not found.\n";
                 }
             } break;
-            // New cases 6-8
             case 6: {
                 int id;
                 std::cout << "Enter account ID to remove: ";
@@ -137,8 +164,8 @@ int main() {
                     accounts.begin(), accounts.end(),
                     [id](const Account& acc) { return acc.getID() == id; });
 
-                accounts.erase(newEnd, accounts.end());
-                std::cout << "Account removed.\n";
+                    accounts.erase(newEnd, accounts.end());
+                    std::cout << "Account removed.\n";
             } break;
             case 7: {
                 float total =
@@ -165,6 +192,45 @@ int main() {
                                });
 
                 std::cout << "Dividend added to all accounts.\n";
+            } break;
+            case 9: {
+                int id;
+                std::cout << "Enter the ID of the account to add contact information to: ";
+                std::cin >> id;
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                auto it = findAccountByID(id);
+                if (it != accounts.end()) {
+                    it->addContactInfo();
+                } else {
+                    std::cout << "Account not found.\n";
+                }
+            } break;
+            case 10: {
+                float minBalance, maxBalance;
+                std::cout << "Enter minimum balance: ";
+                std::cin >> minBalance;
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Enter maximum balance: ";
+                std::cin >> maxBalance;
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                searchAccountsByBalanceRange(minBalance, maxBalance);
+            } break;
+            case 11: {
+                int fromID, toID;
+                float amount;
+                std::cout << "Enter the ID of the account to transfer from: ";
+                std::cin >> fromID;
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Enter the ID of the account to transfer to: ";
+                std::cin >> toID;
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Enter the amount to transfer: ";
+                std::cin >> amount;
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                transferFunds(fromID, toID, amount);
             } break;
             default:
                 std::cout << "Invalid choice. Please try again.\n";
